@@ -18,6 +18,14 @@ public class Layer {
 	public void add(SceneObject object){
 		objectList.add(object);
 	}
+
+	public void update(long deltaTime) {
+		Scene scene = Engine.getEngine().getScene();
+		for(SceneObject object:objectList){
+			//to be done;
+		}
+		
+	}
 	
 	
 }

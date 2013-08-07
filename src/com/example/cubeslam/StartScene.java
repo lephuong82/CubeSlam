@@ -3,6 +3,7 @@ package com.example.cubeslam;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.util.Log;
 
 public class StartScene extends Scene{
 	
@@ -15,12 +16,12 @@ public class StartScene extends Scene{
 		logo.setImage(l);
 		this.createLayer();
 		this.add(logo, 0);
+		
 	}
 
-	
 
-	public void updateBehavior(long delay){
-		past += delay;
+	public void updateBehaviour(long deltaTime){
+		past += deltaTime;
 		if(past >= time){
 			Engine.getEngine().setScene(Factory.getFactory().getMenuScene());
 		}
@@ -30,7 +31,9 @@ public class StartScene extends Scene{
 	@Override
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
+		Log.e("logo", "show logo"); 
 	}
+
 	
 	
 	

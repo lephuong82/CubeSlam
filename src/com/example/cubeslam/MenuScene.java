@@ -7,5 +7,11 @@ public class MenuScene extends Scene{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void updateBehaviour(long deltaTime) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

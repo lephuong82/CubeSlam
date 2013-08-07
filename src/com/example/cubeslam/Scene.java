@@ -5,8 +5,7 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.text.style.BackgroundColorSpan;
+import android.util.Log;
 import android.view.View;
 
 public abstract class Scene {
@@ -27,13 +26,25 @@ public abstract class Scene {
 			canvas.drawBitmap(background, 0, 0, null);	
 		}else{
 			canvas.drawColor(backgroundColor);
+			Log.e("draw","draw");
 		}
 		
 		for(Layer layer:layerList){
 			layer.draw(canvas);
 		}
 	}
-
+	
+	public void update(long deltaTime){
+		updateBehaviour(deltaTime);
+		if(layerList != null) {
+			 for (Layer layer : layerList) {
+				 layer.update(deltaTime);
+			 }		 
+		}
+	}
+	
+	public abstract void updateBehaviour(long deltaTime); 
+	
 	public void setView(View view){
 		this.view = view;
 	}
