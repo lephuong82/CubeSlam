@@ -5,16 +5,17 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 public abstract class Scene {
 
 	private View view;
-	private List<Layer> layerList;
+	protected List<Layer> layerList;
 	private Bitmap background;
 	private Integer backgroundColor;
-	
 	
 	public Scene(){
 		layerList = new ArrayList<Layer>();
@@ -22,12 +23,12 @@ public abstract class Scene {
 	}
 	
 	public void draw(Canvas canvas){
-		if(background!=null){
+		if(background != null){
 			canvas.drawBitmap(background, 0, 0, null);	
-		}else{
+		}else if (backgroundColor != null){
 			canvas.drawColor(backgroundColor);
-			Log.e("draw","draw");
 		}
+		
 		
 		for(Layer layer:layerList){
 			layer.draw(canvas);
@@ -39,7 +40,7 @@ public abstract class Scene {
 		if(layerList != null) {
 			 for (Layer layer : layerList) {
 				 layer.update(deltaTime);
-			 }		 
+			 }
 		}
 	}
 	
@@ -70,4 +71,22 @@ public abstract class Scene {
 		Layer layerInst = layerList.get(layer);
 		layerInst.add(actor);
 	}
+
+	public Bitmap getBackground() {
+		return background;
+	}
+
+	public void setBackground(Bitmap background) {
+		this.background = background;
+	}
+
+	public Integer getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setBackgroundColor(Integer backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+	
+	
 }

@@ -11,9 +11,11 @@ public class StartScene extends Scene{
 	private int past = 0;
 	@Override
 	public void init() {
-		SceneObject logo = new SceneObject();
-		Bitmap l = BitmapFactory.decodeResource(Factory.getFactory().getResources(), R.drawable.logo);
-		logo.setImage(l);
+		StaticSprite logo = new StaticSprite();
+		logo.setImage(Factory.getFactory().logo);
+		logo.setX(Engine.getEngine().getDisplayMetrics().widthPixels/2-logo.getWidth()/2);
+		logo.setY(Engine.getEngine().getDisplayMetrics().heightPixels/2-logo.getHight()/2);
+		
 		this.createLayer();
 		this.add(logo, 0);
 		
@@ -31,7 +33,6 @@ public class StartScene extends Scene{
 	@Override
 	public void draw(Canvas canvas) {
 		super.draw(canvas);
-		Log.e("logo", "show logo"); 
 	}
 
 	

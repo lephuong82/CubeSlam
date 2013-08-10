@@ -32,6 +32,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 		Scene oldScene = this.scene;
 		this.scene = scene;
 		oldScene.disposal();
+		//Log.e("ddddd","ddddd");
 		System.gc();
 	}
 	
@@ -58,13 +59,14 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 		@Override
 		public void run() {
 			while(game_is_running){
-				/*Canvas canvas = null;
+				Canvas canvas = mSurfaceHolder.lockCanvas();
 				synchronized (mSurfaceHolder) {
             		scene.update(SKIP_TICKS);
             		scene.draw(canvas);
-				}*/
-				
+				}
+				//Engine.getEngine().
 				//TODO
+				mSurfaceHolder.unlockCanvasAndPost(canvas);
 			}
 			
 		}

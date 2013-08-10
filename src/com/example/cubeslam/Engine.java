@@ -2,7 +2,8 @@ package com.example.cubeslam;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -20,14 +21,19 @@ public class Engine extends Activity {
         
         engine = this;
 		
+        Factory.getFactory().setResources(getResources());
+        Factory.getFactory().load();
+        
         screen = new Screen(getApplicationContext(),initScene());
         
+        
+
 		setContentView(screen);
 		screen.setFocusable(true);
 		screen.setFocusableInTouchMode(true);
 		screen.requestFocus();
 		
-		Factory.getFactory().setResources(getResources());
+		
 	}
 	
 	
@@ -48,6 +54,14 @@ public class Engine extends Activity {
 		return screen.getScene();
 	}
 	
+	public DisplayMetrics getDisplayMetrics(){
+		DisplayMetrics displayMetrics = new DisplayMetrics();
+		getDisplay().getMetrics(displayMetrics);
+		return displayMetrics;
+	}
 	
+	public Display getDisplay(){
+		return getWindowManager().getDefaultDisplay();
+	}
 
 }

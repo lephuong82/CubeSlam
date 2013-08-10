@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 public class Layer {
 	
@@ -13,6 +14,7 @@ public class Layer {
 		for(SceneObject object : objectList){
 			object.draw(canvas);
 		}
+		//Log.e("draw","layer");
 	}
 	
 	public void add(SceneObject object){
