@@ -14,7 +14,6 @@ public class Layer {
 		for(SceneObject object : objectList){
 			object.draw(canvas);
 		}
-		//Log.e("draw","layer");
 	}
 	
 	public void add(SceneObject object){
@@ -27,6 +26,13 @@ public class Layer {
 			//to be done;
 		}
 		
+	}
+	
+	public void disposal(){
+		for(SceneObject object:objectList){
+			object = null;
+			objectList.remove(object);
+		}
 	}
 	
 	

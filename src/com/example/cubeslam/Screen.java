@@ -3,6 +3,7 @@ package com.example.cubeslam;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -33,6 +34,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 		this.scene = scene;
 		oldScene.disposal();
 		//Log.e("ddddd","ddddd");
+
 		System.gc();
 	}
 	
@@ -102,6 +104,12 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		
+		return scene.onTouchEvent(event);
 	}
 
 	

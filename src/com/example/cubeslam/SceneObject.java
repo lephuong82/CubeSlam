@@ -2,6 +2,7 @@ package com.example.cubeslam;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 
 public class SceneObject {
 	
@@ -26,6 +27,12 @@ public class SceneObject {
 	
 	public void setImage(Bitmap image){
 		this.image = image;
+		setWidth(image.getWidth());
+		setHeight(image.getHeight());
+	}
+	
+	public Bitmap getImage(){
+		return image;
 	}
 	
 	public void update(long deltaTime){
@@ -58,7 +65,7 @@ public class SceneObject {
 		this.width = width;
 	}
 	
-	public float getHight(){
+	public float getHeight(){
 		return height;
 	}
 	

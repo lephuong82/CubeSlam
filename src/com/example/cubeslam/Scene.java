@@ -5,10 +5,10 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 
 public abstract class Scene {
 
@@ -20,10 +20,14 @@ public abstract class Scene {
 	public Scene(){
 		layerList = new ArrayList<Layer>();
 		layerList.add(new Layer());
+		
 	}
 	
 	public void draw(Canvas canvas){
-		if(background != null){
+		if(getPaint()!= null){
+			canvas.drawPaint(getPaint());
+		}
+		else if(background != null){
 			canvas.drawBitmap(background, 0, 0, null);	
 		}else if (backgroundColor != null){
 			canvas.drawColor(backgroundColor);
@@ -33,8 +37,13 @@ public abstract class Scene {
 		for(Layer layer:layerList){
 			layer.draw(canvas);
 		}
+		
 	}
 	
+	public Paint getPaint() {
+		return null;
+	}
+
 	public void update(long deltaTime){
 		updateBehaviour(deltaTime);
 		if(layerList != null) {
@@ -42,6 +51,7 @@ public abstract class Scene {
 				 layer.update(deltaTime);
 			 }
 		}
+		
 	}
 	
 	public abstract void updateBehaviour(long deltaTime); 
@@ -58,6 +68,9 @@ public abstract class Scene {
 	
 	public void disposal(){
 		view = null;
+		for(Layer layer:layerList){
+			layer.disposal();
+		}
 		layerList = null;
 		background = null;
 	}
@@ -88,5 +101,8 @@ public abstract class Scene {
 		this.backgroundColor = backgroundColor;
 	}
 	
+	public abstract boolean onTouchEvent(MotionEvent event);// {
+//		return false;
+//	}
 	
 }
