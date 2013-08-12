@@ -6,8 +6,8 @@ public class Ball extends MovableObject{
 	private int speed_X = 1;
 	private int speed_Y = 1;
 	
-	private int deltaX;
-	private int deltaY;
+	private long deltaX;
+	private long deltaY;
 	
 	
 	public void init(){
@@ -16,10 +16,10 @@ public class Ball extends MovableObject{
 
 	@Override
 	public void updateBehaviour(long delay) {
-		long deltaY = (long )(delay * speed_Y)/5;
+		deltaY = (long )(delay * speed_Y)/5;
 		setY(getY()+deltaY);
 		
-		long deltaX = (long)(delay * speed_X)/10;
+		deltaX = (long)(delay * speed_X)/5;
 		setX(getX()+deltaX);
 		
 		
@@ -28,7 +28,6 @@ public class Ball extends MovableObject{
 	public void collision(SceneObject object){
 		
 		if(object instanceof Board){
-			//Board board = (Board)object;
 			speed_Y = -speed_Y;
 		}
 		else{
@@ -36,5 +35,14 @@ public class Ball extends MovableObject{
 		}
 
 	}
+	
+	public int getSpeed_X(){
+		return speed_X;
+	}
+	
+	public int getSpeed_Y(){
+		return speed_Y;
+	}
+	
 	
 }

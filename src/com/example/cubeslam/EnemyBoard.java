@@ -9,12 +9,6 @@ public class EnemyBoard extends Board {
 		Ball ball = GameScene.getGameScene().getBall();
 		setX(ball.getX()-getWidth()/2);
 	}
-
-	
-
-	
-	
-	
 	
 	
 }

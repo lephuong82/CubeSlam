@@ -25,41 +25,62 @@ public class GameScene extends Scene{
 		gameScene = this;
 	}
 	
-	
+	private int temp = 0;
+	private int MAX = 50;
 	@Override
 	public void updateBehaviour(long deltaTime) {
+		temp++;
+		Log.e("!",""+temp);
 		ball.update(deltaTime);
 		enemyBoard.update(deltaTime);
-		if(ball.getY() > myBoard.getY()-ball.getHeight()){
-			if(ball.getX() > myBoard.getX()&&ball.getX() < myBoard.getX()+myBoard.getWidth()){
-				ball.collision(myBoard);
-			}
-		}
-		if(ball.getY() < ball.getHeight()){
-			if(ball.getX() > enemyBoard.getX()&&ball.getX() < enemyBoard.getX()+enemyBoard.getWidth()){
-				ball.collision(enemyBoard);
+		if(temp > MAX){
+			if(ball.getY() > myBoard.getY()-ball.getHeight()){
+				if(ball.getX() > myBoard.getX()&&ball.getX() < myBoard.getX()+myBoard.getWidth()){
+					ball.collision(myBoard);
+					temp = 0;
+				} 
+				
+			} 
+			else if(ball.getY() > myBoard.getY()){
+				if(ball.getX() > myBoard.getX()&&ball.getX() < myBoard.getX()+myBoard.getWidth()){
+					ball.collision(new SceneObject());
+					temp = 0;
+				}
 			}
 			
+			if(ball.getY() < ball.getHeight()){
+				if(ball.getX() > enemyBoard.getX()&&ball.getX() < enemyBoard.getX()+enemyBoard.getWidth()){
+					ball.collision(enemyBoard);
+					temp = 0;
+				}
+			}
+			else if(ball.getY() > myBoard.getY()){
+				if(ball.getX() > myBoard.getX()&&ball.getX() < myBoard.getX()+myBoard.getWidth()){
+					ball.collision(new SceneObject());
+					temp = 0;
+				}
+			}
 		}
 		
-		if(ball.getX()<0 || ball.getX()>(Engine.getEngine().getDisplayMetrics().widthPixels-ball.getWidth())){
+		
+		if(ball.getX() < 0 || ball.getX() > (Engine.getEngine().getDisplayMetrics().widthPixels-ball.getWidth())){
 			ball.collision(new SceneObject());
 		}
 		
 		if(ball.getY() > (Engine.getEngine().getDisplayMetrics().heightPixels)||
 				ball.getY() < 0-ball.getHeight()){
-			ball.setX(Engine.getEngine().getDisplayMetrics().widthPixels/2 - ball.getHeight()/2);
-			ball.setY(Engine.getEngine().getDisplayMetrics().heightPixels/2 - ball.getWidth()/2);
-			
+			initBall();
 		}
+		
+		
 		
 	}
 
 	@Override
 	public void init() {
-		float w = Engine.getEngine().getDisplay().getWidth();
-		float h = Engine.getEngine().getDisplay().getHeight();
-		gradient = new LinearGradient(w/2, 0, w/2, h, Color.rgb(42, 189, 100), Color.rgb(255, 255, 255), TileMode.REPEAT);
+		float w = Engine.getEngine().getDisplayMetrics().widthPixels;
+		float h = Engine.getEngine().getDisplayMetrics().heightPixels;
+		gradient = new LinearGradient(w/2, 0, w/2, h, Color.rgb(42, 189, 000), Color.YELLOW, TileMode.REPEAT);
 		backPaint = new Paint();
 		backPaint.setShader(gradient);	
 		createLayer();
@@ -85,12 +106,14 @@ public class GameScene extends Scene{
 	public void createBall(){
 		ball = new Ball();
 		ball.setImage(Factory.getFactory().ball);
-		ball.setX(Engine.getEngine().getDisplayMetrics().widthPixels/2 - ball.getHeight()/2);
-		ball.setY(Engine.getEngine().getDisplayMetrics().heightPixels/2 - ball.getWidth()/2);
+		initBall();
 		add(ball, 0);
 	}
 	
-	
+	public void initBall(){
+		ball.setX(Engine.getEngine().getDisplayMetrics().widthPixels/2 - ball.getHeight()/2);
+		ball.setY(Engine.getEngine().getDisplayMetrics().heightPixels/2 - ball.getWidth()/2);
+	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

@@ -2,12 +2,12 @@ package com.example.cubeslam;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class Screen extends SurfaceView implements SurfaceHolder.Callback {
+	
 	Scene scene;
 	GameThread gameThread;
 	Context context;
@@ -50,7 +50,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 		Context context;
 		
 		int FRAMES_PER_SECOND = 25;
-		int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
+		int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;	
 		boolean game_is_running = true;
 		
 		
@@ -61,15 +61,41 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 		@Override
 		public void run() {
 			while(game_is_running){
-				Canvas canvas = mSurfaceHolder.lockCanvas();
+			/*	Canvas canvas = mSurfaceHolder.lockCanvas();
 				synchronized (mSurfaceHolder) {
             		scene.update(SKIP_TICKS);
             		scene.draw(canvas);
 				}
-				//Engine.getEngine().
+				
 				//TODO
-				mSurfaceHolder.unlockCanvasAndPost(canvas);
+				if(canvas!=null){
+					mSurfaceHolder.unlockCanvasAndPost(canvas);
+					Log.e("!!!!", "1");
+				}*/
+			
+				 Canvas canvas = null;
+	             try {
+	                 canvas = mSurfaceHolder.lockCanvas(null);
+	                 synchronized (mSurfaceHolder) {
+	                 		scene.update(SKIP_TICKS);
+	                 		scene.draw(canvas);
+	                 		
+	                 }
+	             } catch (Exception e) {
+	             	
+					} finally {
+	                 // do this in a finally so that if an exception is thrown
+	                 // during the above, we don't leave the Surface in an
+	                 // inconsistent state
+	                 if (canvas != null) {
+	                     mSurfaceHolder.unlockCanvasAndPost(canvas);
+	                 }
+	             }
+				
 			}
+			
+			
+			
 			
 		}
 		
@@ -102,7 +128,17 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
+        boolean retry = true;
+        while (retry) {
+            try {
+            	gameThread.setRunning(false);
+            	gameThread.join();
+                retry = false;
+            } catch (InterruptedException e) {
+            	
+            }
+        }	
+		
 		
 	}
 
